@@ -175,10 +175,12 @@ class Trie(object):
 
     def insert_relative(self, node:TrieNode, relative_node:TrieNode)->None:
         # connected Trienodes
-        if hasattr(node, 'relatives') and relative_node not in node.relatives:
-            node.relatives.append(relative_node)
+        if hasattr(node, 'relatives'):
+            if relative_node not in node.relatives:
+                node.relatives.append(relative_node)
         else:
             node.relatives = [relative_node,]
+
     
     def get_relatives(self, node:TrieNode)->list:
         if hasattr(node, 'relatives'):

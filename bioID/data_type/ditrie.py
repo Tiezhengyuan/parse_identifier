@@ -26,7 +26,7 @@ class Ditrie(object):
         give key in atrie, get value in btrie
         '''
         output = []
-        end_node = self.atrie.get(a_iter)
+        end_node = self.atrie.get_node(a_iter)
         if end_node:
             for relative_node in self.atrie.get_relatives(end_node):
                 word = self.btrie.retrieve(relative_node)

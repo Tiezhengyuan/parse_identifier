@@ -1,7 +1,7 @@
 '''
 Test ENV
 '''
-from tests.helper import *
+from helper import *
 
 
 @ddt
@@ -11,4 +11,6 @@ class TestENV(TestCase):
         pass
 
     def test_env(self):
+        print(DIR_TESTS)
         print(DIR_DATA)
+        print(DIR_RESULTS)

@@ -2,7 +2,7 @@
 Test trie
 '''
 from helper import *
-from data_type.trie import Trie as c
+from bioID.data_type.trie import Trie as c
 
 @ddt
 class TestTrie(TestCase):

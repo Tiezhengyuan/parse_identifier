@@ -11,4 +11,6 @@ from unittest import TestCase, mock, skip
 
 
 # store example data for unit and local testing
-DIR_DATA = os.path.join(os.path.dirname(__file__), 'data')
+DIR_TESTS = os.path.dirname(__file__)
+DIR_DATA = os.path.join(DIR_TESTS, 'data')
+DIR_RESULTS = os.path.join(DIR_TESTS, 'results')

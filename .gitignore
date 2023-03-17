@@ -1,5 +1,4 @@
-data/
-python/tests/*/__pycache__
-python/results/
-python/.pytest_cache
-python/__pycache__/
+tests/data/
+tests/results/
+tests/__pycache__
+bioID/*/__pycache__/

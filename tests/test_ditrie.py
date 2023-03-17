@@ -2,7 +2,7 @@
 Test trie
 '''
 from helper import *
-from data_type.ditrie import Ditrie as c
+from bioID.data_type.ditrie import Ditrie as c
 
 @ddt
 class TestTrie(TestCase):
@@ -10,19 +10,13 @@ class TestTrie(TestCase):
     def test_insert(self):
         t = c()
         # insert one pair
-        t.insert('ab','xy')
-        res = t.get('ab')
+        res = t.insert('ab','xy')
+        assert res.val == 'b'
+        assert res.relatives[0].val == 'y'
 
         # insert duplicate
-        t.insert('ab','xy')
-        assert res == ['xy']
-        res = t.get('ab')
-        assert res == ['xy']
-
-        # insert another
-        t.insert('abc','xyz')
-        res = [a for a,_ in t.btrie.scan()]
-        assert res == ['xy', 'xyz']
+        res = t.insert('ab','xy')
+        assert res.counter == 2
 
     def test_get(self):
         t = c()
@@ -45,7 +39,7 @@ class TestTrie(TestCase):
         res = [(a,b) for a, b in t.items()]
         expect = [('ab', ['xy']), ('abc', ['xyz'])]
         assert res == expect
-    
+
     def test_switch(self):
         t = c()
         t.insert('ab','xy')
