@@ -1,0 +1,5 @@
+data/
+python/tests/*/__pycache__
+python/results/
+python/.pytest_cache
+python/__pycache__/
