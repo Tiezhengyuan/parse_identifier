@@ -2,3 +2,4 @@ tests/data/
 tests/results/
 tests/__pycache__
 bioID/*/__pycache__/
+venv/

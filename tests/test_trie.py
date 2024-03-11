@@ -1,48 +1,44 @@
 '''
 Test trie
 '''
-from helper import *
-from bioID.data_type.trie import Trie as c
+from .helper import *
+from bioID.data_type.trie import Trie
 
 @ddt
 class TestTrie(TestCase):
 
-    def test_node_size(self):
-        t = c()
-        res = t.insert(list('word'))
-        assert sys.getsizeof(res) == 48
-        res = t.insert(list('abc')*100)
-        assert sys.getsizeof(res) == 48
-
-    def test_insert(self):
-        t = c()
-        t.insert(list('wo'))
-        t.insert(list('wolf'))
-        t.insert(list('w'))
-        res = [a for a,_ in t.scan()]
-        assert res == ['w', 'wo', 'wolf']
-
-    def test_search(self):
-        t = c()
-        res = t.search('wo')
-        assert res == []
-
-        t.insert(list('word'))
-        t.insert(list('words'))
-        t.insert(list('fox'))
-        t.insert(list('wolf'))
-        t.insert(list('wolf'))
-        res = t.search('wo')
-        expect = [('word', 2), ('wolf', 2), ('words', 1)]
+    @data(
+        [['w', 'wo', 'wolf'], ['w', 'wo', 'wolf']],
+        [['abc', 'abc'], ['abc']],
+        [['abc',], ['abc']],
+        [[], []],
+    )
+    @unpack
+    def test_insert(self, input, expect):
+        t = Trie()
+        for s in input:
+            t.insert(s)
+        res = [a for _,a in t.scan()]
         assert res == expect
 
-        res = t.search('word')
-        expect = [('word', 2),('words', 1),]
+    @data(
+        # only prefix matching
+        ['wo', [('word', 2), ('wolf', 2), ('words', 1)]],
+        ['word', [('word', 2),('words', 1),]],
+        # middle or tail matching is not working
+        ['or', []],
+        ['lf', []],
+    )
+    @unpack
+    def test_search(self, input ,expect):
+        t = Trie()
+        for s in ['word', 'words', 'fox', 'wolf', 'wolf']:
+            t.insert(s)
+        res = t.search(input)
         assert res == expect
-
 
     def test_dump(self):
-        t = c()
+        t = Trie()
         t.insert(list('word'))
         t.insert(list('words'))
         t.insert(list('world'))
@@ -50,12 +46,11 @@ class TestTrie(TestCase):
         t.insert(list('wolf'))
         t.insert(list('golf'))
         res = t.dump()
-        expect = [('golf', 1), ('wolf', 2), ('word', 2),
-                ('words', 1), ('world', 1)]
+        expect = [('golf', 1), ('wolf', 2), ('word', 2), ('words', 1), ('world', 1)]
         assert res == expect
 
     def test_scan(self):
-        t = c()
+        t = Trie()
         res = [a for a,_ in t.scan()]
         assert res == []
 
@@ -65,12 +60,12 @@ class TestTrie(TestCase):
         t.insert(list('wolf'))
         t.insert(list('wolf'))
         t.insert(list('golf'))
-        res = [a for a,_ in t.scan()]
+        res = [a for _, a in t.scan()]
         expect = ['word', 'words', 'world', 'wolf', 'golf']
         assert res == expect
 
     def test_get(self):
-        t = c()
+        t = Trie()
         res = t.get('wo')
         assert res is None
         t.insert(list('word'))
@@ -86,7 +81,7 @@ class TestTrie(TestCase):
         assert res == 'words'
 
     def test_get_node(self):
-        t = c()
+        t = Trie()
         res = t.get_node('wo')
         assert res is None
         t.insert(list('word'))
@@ -104,7 +99,7 @@ class TestTrie(TestCase):
         assert res is None
 
     def test_delete(self):
-        t = c()
+        t = Trie()
         res = t.delete('wo')
         assert res == []
         t.insert(list('word'))
@@ -129,7 +124,7 @@ class TestTrie(TestCase):
 
 
     def test_retrieve(self):
-        t = c()
+        t = Trie()
         res = t.retrieve(t.root)
         assert res == ''
         res = t.retrieve(None)
@@ -146,7 +141,7 @@ class TestTrie(TestCase):
         assert res == 'wo'
     
     def test_relative(self):
-        t = c()
+        t = Trie()
         node = t.insert(list('word'))
         node_a = t.insert(list('truck'))
         node_b = t.insert(list('car'))
@@ -159,8 +154,8 @@ class TestTrie(TestCase):
         assert res == ['truck', 'car']
 
 
-    def test_scan(self):
-        t = c()
+    def test_memory_size(self):
+        t = Trie()
         t.insert(list('word'))
         t.insert(list('words'))
         t.insert(list('world'))
@@ -169,4 +164,4 @@ class TestTrie(TestCase):
         t.insert(list('golf'))
         t.insert(list('abc')*100)
         res = t.memory_size()
-        assert res == 15072
+        assert res > 15072

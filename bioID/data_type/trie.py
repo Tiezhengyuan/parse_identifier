@@ -10,43 +10,26 @@ except root node, values of all other nodes should not be None, ''
 """
 from typing import Iterable
 import sys
-
-class TrieNode:
-    """A node in the trie structure"""
-    def __init__(self, val:str, node_attrs:list=None):
-        self.val = val
-        # only leave nodes are True
-        self.is_end = False
-        # count number of strings having that prefix
-        self.counter = 0
-        # parent node: only one node in TireNode type
-        self.parent = None
-        # child nodes: keys are child.val, values are child nodes
-        # self.children = {}
-        #Optional: attributes of this node
-        if isinstance(node_attrs, list):
-            for a,v in node_attrs:
-                setattr(self, a, v)
-
+from .trie_node import TrieNode
 class Trie(object):
 
     def __init__(self, node_attrs:list=None):
         self.node_attrs = node_attrs
         # One trie has one root node.
-        # The root node does not store any character
+        # The root node does not store any character, so val is empty string
         self.root = TrieNode("", self.node_attrs)
-        self.root.counter += 1
+        # used for depth-first search recursion
+        self.output = []
     
     def insert(self, iter_word:Iterable)->TrieNode:
         """
         Insert a string into the trie
         return reference of the last node
         """
+        # start from root
         node = self.root
         for char in iter_word:
             # node.children is dict
-            if not hasattr(node, 'children'):
-                setattr(node, 'children', {})
             if char in node.children:
                 node = node.children[char]
             else:
@@ -58,16 +41,31 @@ class Trie(object):
             node.counter += 1
         else:
             node.is_end = True
+        # return leave node
         return node
+    
+    def scan(self, node=None, prefix=None) -> Iterable:
+        '''
+        recursive: depth-first search
+        In default: retrieve all strings stored in Trie
+        one prefix represent  one string stored in Trie
+        '''
+        if node is None: node = self.root
+        if prefix is None: prefix = ''
+        if node.is_end:
+            yield node, prefix
+        for val, child_node in node.children.items():
+            yield from self.scan(child_node, prefix + val)
 
     def dfs_search(self, node, prefix)->tuple:
         """Depth-first search
         node: the node to start with
         prefix: the current prefix-value for this node
+        self.output would be updated
         """
         if node.is_end:
             self.output.append((prefix + node.val, node.counter))
-        for child in getattr(node, 'children', {}).values():
+        for child in node.children.values():
             self.dfs_search(child, prefix + node.val)
             
     def search(self, iter_prefix:list)->list:
@@ -75,10 +73,11 @@ class Trie(object):
         Retrieve all strings with the same prefix
         for example: prefix=wor, return world, word, words etc.
         """
+        # initilize self.output and node
         self.output = []
         node = self.root
         for char in iter_prefix:
-            if char in getattr(node, 'children', {}):
+            if char in node.children:
                 node = node.children[char]
             else:
                 return []
@@ -91,22 +90,12 @@ class Trie(object):
         dump all strings to list
         Note: don't do that if numbero of nodes are.
         '''
+        # initilize self.output and node
         self.output = []
         node = self.root
         self.dfs_search(node, '')
         return sorted(self.output, key=lambda x: x[0])
             
-    def scan(self, node=None, prefix=None)->Iterable:
-        '''
-        scan all strings
-        '''
-        if node is None: node = self.root
-        if prefix is None: prefix = ''
-        if node.is_end:
-            yield prefix, node
-        for val, child_node in getattr(node, 'children', {}).items():
-            yield from self.scan(child_node, prefix + val)
-
     def get(self, iter_word:Iterable)->TrieNode:
         """
         exact match a string 
@@ -114,7 +103,7 @@ class Trie(object):
         node = self.root
         word = ''
         for val in iter_word:
-            if val in getattr(node, 'children', {}):
+            if val in node.children:
                 word += val
                 node = node.children[val]
             else:
@@ -130,7 +119,7 @@ class Trie(object):
         """
         node = self.root
         for val in iter_word:
-            if val in getattr(node, 'children', {}):
+            if val in node.children:
                 node = node.children[val]
             else:
                 return None
@@ -149,7 +138,7 @@ class Trie(object):
         parent = self.root
         node = self.root
         for val in iter_word:
-            if val in getattr(node, 'children', {}):
+            if val in node.children:
                 parent = node
                 node = node.children[val]
             else:
