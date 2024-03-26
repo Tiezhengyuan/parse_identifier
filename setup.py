@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import codecs
 import os
 
@@ -16,7 +16,8 @@ setup(
     url = "https://github.com/Tiezhengyuan/parse_identifier",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    packages=find_packages(),
+    packages=['parseID'],
+    package_dir={'': 'src'},
     install_requires=['numpy', 'pandas', 'requests', 'obonet', 'python-dotenv'],
     keywords=['pypi', 'cicd', 'python'],
     classifiers=[
