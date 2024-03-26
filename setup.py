@@ -9,7 +9,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name="parseid",
-    version='0.1.0',
+    version='0.1.1',
     author="Tiezheng Yuan",
     author_email="tiezhengyuan@hotmail.com",
     description="suck, parse identifiers or accession numbers",
