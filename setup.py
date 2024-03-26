@@ -8,7 +8,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\\n" + fh.read()
 
 setup(
-    name="mapid",
+    name="parseid",
     version='0.1.0',
     author="Tiezheng Yuan",
     author_email="tiezhengyuan@hotmail.com",
