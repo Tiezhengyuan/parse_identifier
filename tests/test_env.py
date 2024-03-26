@@ -1,7 +1,7 @@
 '''
 Test ENV
 '''
-from helper import *
+from .helper import *
 
 
 @ddt

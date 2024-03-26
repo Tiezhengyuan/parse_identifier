@@ -2,7 +2,7 @@
 Test trie
 '''
 from .helper import *
-from bioID.data_type.trie import Trie
+from src.parseID import Trie
 
 @ddt
 class TestTrie(TestCase):
@@ -50,6 +50,19 @@ class TestTrie(TestCase):
         assert res == expect
 
     def test_scan(self):
+        '''
+        root
+        / \
+       g   w
+       |   |
+       o   o
+       |   |\
+       l   l r
+       |   | |\
+       f   f d l
+             | |
+             s d
+        '''
         t = Trie()
         res = [a for a,_ in t.scan()]
         assert res == []
@@ -60,9 +73,13 @@ class TestTrie(TestCase):
         t.insert(list('wolf'))
         t.insert(list('wolf'))
         t.insert(list('golf'))
-        res = [a for _, a in t.scan()]
-        expect = ['word', 'words', 'world', 'wolf', 'golf']
-        assert res == expect
+        words = []
+        leave_word = []
+        for node, prefix in t.scan():
+            words.append(prefix)
+            leave_word.append(node.val)
+        assert words == ['word', 'words', 'world', 'wolf', 'golf']
+        assert leave_word == ['d', 's', 'd', 'f', 'f']
 
     def test_get(self):
         t = Trie()

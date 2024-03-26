@@ -1,6 +1,7 @@
-requests==2.25.1
-obonet==0.3.1
-python-dotenv==1.0.0
+ddt
+requests
+obonet
+python-dotenv
 numpy
 pandas
-ddt
+pytest

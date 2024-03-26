@@ -8,9 +8,12 @@ leave nodes have not child nodes.
 value of root node should be ''
 except root node, values of all other nodes should not be None, ''
 """
-from typing import Iterable
 import sys
+from typing import Iterable
+
 from .trie_node import TrieNode
+
+
 class Trie(object):
 
     def __init__(self, node_attrs:list=None):
@@ -48,7 +51,8 @@ class Trie(object):
         '''
         recursive: depth-first search
         In default: retrieve all strings stored in Trie
-        one prefix represent  one string stored in Trie
+        return: node is leave node
+        return: prefix represent  one string stored in Trie
         '''
         if node is None: node = self.root
         if prefix is None: prefix = ''
@@ -184,4 +188,3 @@ class Trie(object):
     def memory_size(self):
         size = sys.getsizeof(self.root)
         return  size* self.root.counter
-

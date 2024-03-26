@@ -1,6 +1,5 @@
 
-import os
-from typing import Callable, Iterable
+from typing import Iterable
 
 class File:
     def __init__(self, infile:str):

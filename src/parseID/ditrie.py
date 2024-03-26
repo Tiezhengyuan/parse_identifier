@@ -4,15 +4,16 @@ Define A trie and B trie:
 one leave node of A trie is mapped to one or more leave nodes of B trie
 """
 from typing import Iterable
-from .trie import TrieNode, Trie
+from .trie_node import TrieNode
+from .trie import Trie
 
-class Ditrie(object):
+class DiTrie(object):
 
     def __init__(self, atrie:Trie=None, btrie:Trie=None):
         self.atrie = atrie if atrie else Trie()
         self.btrie = btrie if btrie else Trie()
     
-    def insert(self, a_iter:Iterable, b_iter:Iterable)->TrieNode:
+    def insert(self, a_iter:Iterable, b_iter:Iterable) -> TrieNode:
         '''
         insert key-value into atrie and btrie, respectively
         '''
@@ -21,7 +22,7 @@ class Ditrie(object):
         self.atrie.insert_relative(a_node, b_node)
         return a_node
     
-    def get(self, a_iter:Iterable)->list:
+    def get(self, a_iter:Iterable) -> list:
         '''
         give key in atrie, get value in btrie
         '''
@@ -34,29 +35,24 @@ class Ditrie(object):
                     output.append(word)
         return output
 
-    def items(self)->Iterable:
+    def items(self) -> Iterable:
         '''
         scan the two trie, return pair of key-value
         '''
-        for key, end_node in self.atrie.scan():
+        for end_node, prefix in self.atrie.scan():
             values = []
             for relative_node in self.atrie.get_relatives(end_node):
                 word = self.btrie.retrieve(relative_node)
                 if word and word not in values:
                     values.append(word)
-            yield (key, values)
+            yield (prefix, values)
     
     def switch(self):
         '''
         switch key-values
         '''
-        for _, end_node in self.atrie.scan():
+        for end_node, _ in self.atrie.scan():
             for relative_node in self.atrie.get_relatives(end_node):
                 self.btrie.insert_relative(relative_node, end_node)
             self.atrie.delete_relatives(end_node)
         self.atrie, self.btrie = self.btrie, self.atrie
-            
-
-
-
-        

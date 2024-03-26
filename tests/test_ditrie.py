@@ -1,14 +1,14 @@
 '''
 Test trie
 '''
-from helper import *
-from bioID.data_type.ditrie import Ditrie as c
+from .helper import *
+from src.parseID import DiTrie
 
 @ddt
 class TestTrie(TestCase):
 
     def test_insert(self):
-        t = c()
+        t = DiTrie()
         # insert one pair
         res = t.insert('ab','xy')
         assert res.val == 'b'
@@ -19,7 +19,7 @@ class TestTrie(TestCase):
         assert res.counter == 2
 
     def test_get(self):
-        t = c()
+        t = DiTrie()
         t.insert('ab','xy')
         
         # correct key
@@ -33,20 +33,24 @@ class TestTrie(TestCase):
         assert res == []
 
     def test_items(self):
-        t = c()
+        '''
+        test DiTrie().items()
+        '''
+        t = DiTrie()
         t.insert('ab','xy')
         t.insert('abc','xyz')
         res = [(a,b) for a, b in t.items()]
-        expect = [('ab', ['xy']), ('abc', ['xyz'])]
-        assert res == expect
+        assert res == [('ab', ['xy']), ('abc', ['xyz'])]
 
     def test_switch(self):
-        t = c()
+        '''
+        test DiTrie().switch()
+        '''
+        t = DiTrie()
         t.insert('ab','xy')
         t.insert('abc','xyz')
         t.switch()
         res = t.get('xy')
         assert res == ['ab']
         res = [(a,b) for a, b in t.items()]
-        expect = [('xy', ['ab']), ('xyz', ['abc'])]
-        assert res == expect
+        assert res == [('xy', ['ab']), ('xyz', ['abc'])]

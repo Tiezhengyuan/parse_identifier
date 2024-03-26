@@ -2,7 +2,7 @@
 Test trie
 '''
 from .helper import *
-from bioID.data_type.trie_node import TrieNode
+from src.parseID import TrieNode
 
 @ddt
 class TestTrieNode(TestCase):
