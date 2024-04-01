@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import codecs
 import os
 
@@ -9,15 +9,14 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name="parseid",
-    version='0.1.2',
+    version='0.1.3',
     author="Tiezheng Yuan",
     author_email="tiezhengyuan@hotmail.com",
     description="suck, parse identifiers or accession numbers",
     url = "https://github.com/Tiezhengyuan/parse_identifier",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    packages=['parseid'],
-    package_dir={'': 'src'},
+    packages=find_packages(),
     install_requires=['numpy', 'pandas', 'requests', 'obonet', 'python-dotenv'],
     keywords=['pypi', 'cicd', 'python'],
     classifiers=[
