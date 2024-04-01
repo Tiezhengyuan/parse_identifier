@@ -1,0 +1,5 @@
+numpy
+obonet
+pandas
+python-dotenv
+requests

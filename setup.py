@@ -9,14 +9,14 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name="parseid",
-    version='0.1.1',
+    version='0.1.2',
     author="Tiezheng Yuan",
     author_email="tiezhengyuan@hotmail.com",
     description="suck, parse identifiers or accession numbers",
     url = "https://github.com/Tiezhengyuan/parse_identifier",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    packages=['parseID'],
+    packages=['parseid'],
     package_dir={'': 'src'},
     install_requires=['numpy', 'pandas', 'requests', 'obonet', 'python-dotenv'],
     keywords=['pypi', 'cicd', 'python'],

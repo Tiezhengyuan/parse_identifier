@@ -2,7 +2,7 @@
 Test trie
 '''
 from .helper import *
-from src.parseID import Trie
+from src.parseid import Trie
 
 @ddt
 class TestTrie(TestCase):

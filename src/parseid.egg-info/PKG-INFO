@@ -1,4 +1,20 @@
-# parseID: suck, parse identifiers or accession numbers
+Metadata-Version: 2.1
+Name: parseid
+Version: 0.1.1
+Summary: suck, parse identifiers or accession numbers
+Home-page: https://github.com/Tiezhengyuan/parse_identifier
+Author: Tiezheng Yuan
+Author-email: tiezhengyuan@hotmail.com
+Keywords: pypi,cicd,python
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Unix
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Description-Content-Type: text/markdown
+
+\n# parseID: suck, parse identifiers or accession numbers
 
 ## Introduction
 parseID is a bioinformatics data structure library optimized for sucking identifiers or 
@@ -12,11 +28,13 @@ parseID employs Data structure "trie" and "ditrie". Trie could suck tremendous i
 Ditrie could suck a large number of mapping of identifiers. Through the trie and ditrie, 
 huge data operations including insert, get, search, delete, scan etc could be quickly called.
 
+
 ## testing
 
 ```
 pytest -s tests
 ```
+
 
 ## quick start
 There is one example about how huge accession numbers are sucked into Trie.
@@ -24,9 +42,9 @@ The mapping file could be downloaded from https://ftp.ncbi.nlm.nih.gov/gene/DATA
 Retrieve 176,513,729 (03/25/2024) UniProt Accession numbers from the file and feed them into Trie.
 Showed as the example below, accession numbers are stored in the object uniprotkb_acc_trie. 
 ```
-from parseid import ProcessID
+from parseID import ProcessID
 infile = 'gene_refseq_uniprotkb_collab'
-uniprotkb_acc_trie = ProcessID(infile).uniprotkb_accession()
+uniprotkb_acc_trie = ProcessID().uniprotkb_accession(infile)
 ```
 
 Retrieve pairs of NCBI protein accession number and UniProt Accession numbers
@@ -34,9 +52,9 @@ from file and feed them into Ditrie. Showed as the example below,
 the mapping fo two accession numbers are stored in the object map_trie, 
 which is ready for query or parsing.
 ```
-from parseid import ProcessID
+from parseID import ProcessID
 infile = 'gene_refseq_uniprotkb_collab'
-ncbi_uniprotkb_ditrie = ProcessID(infile).map_ncbi_uniprotkb()
+ncbi_uniprotkb_ditrie = ProcessID().map_ncbi_uniprotkb(infile)
 ```
 
 
