@@ -9,7 +9,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name="parseid",
-    version='0.1.5',
+    version='0.2.0',
     author="Tiezheng Yuan",
     author_email="tiezhengyuan@hotmail.com",
     description="suck, parse identifiers or accession numbers",
@@ -18,7 +18,14 @@ setup(
     long_description=long_description,
     packages=['parseid'],
     package_dir={'': 'src'},
-    install_requires=['numpy', 'pandas', 'requests', 'obonet', 'python-dotenv'],
+    install_requires=[
+        'bioomics',
+        'numpy',
+        'pandas',
+        'requests',
+        'obonet',
+        'python-dotenv'
+    ],
     keywords=['pypi', 'cicd', 'python'],
     classifiers=[
         "Development Status :: 1 - Planning",

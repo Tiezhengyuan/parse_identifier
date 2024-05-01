@@ -26,7 +26,7 @@ Showed as the example below, accession numbers are stored in the object uniprotk
 ```
 from parseid import ProcessID
 infile = 'gene_refseq_uniprotkb_collab'
-uniprotkb_acc_trie = ProcessID(infile).uniprotkb_accession()
+uniprotkb_acc_trie = ProcessID(infile).uniprotkb_protein_accession()
 ```
 
 Retrieve pairs of NCBI protein accession number and UniProt Accession numbers
